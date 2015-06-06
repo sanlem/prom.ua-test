@@ -13,7 +13,7 @@
 
 <div class="row">	
 	<div class="col-xs-4">
-		<p class="text"> Автор: {{ question.author.username }} </p>
+		<p class="text">Автор: <a href=" {{ url_for('profile', username=question.author.username)}} "> {{ question.author.username }}</a> </p>
 		<a href= "{{ url_for('some_question', id=question.id) }}" >Детальніше</a>
 	</div>
 	<div class="col-xs-6"></div>

@@ -28,7 +28,6 @@ def register():
     form = forms.RegistrationForm(request.form)
     if request.method == 'POST' and form.validate():
         password = bcrypt.generate_password_hash(form.password.data)
-        # user = User(username=form.username.data, password=form.password.data)
         user = User(username=form.username.data, password=password)
         db.session.add(user)
         db.session.commit()
@@ -49,16 +48,12 @@ def load_user(userid):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # Here we use a class of some kind to represent and validate our
-    # client-side form data. For example, WTForms is a library that will
-    # handle this for us.
     form = forms.LoginForm(request.form)
     if request.method == 'POST' and form.validate():
 
         username = form.username.data
         password = form.password.data
-        remember_me = form.remember_me.data
-        # user = User.query.filter_by(username=username, password=password).first()
+        remember_me = 1
         user = User.query.filter_by(username=username).first()
         if user is not None and bcrypt.check_password_hash(user.password, password):
             login_user(user, remember=remember_me)
@@ -110,8 +105,6 @@ def ask():
 @app.route('/question/<id>/<int:page>')
 def some_question(id, page=1):
     question = Question.query.filter_by(id=id).first_or_404()
-    # answers = Answer.query.filter_by()
-    # answers = Answer.query.filter_by(question_id=id).paginate(page, QUESTIONS_PER_PAGE, False)
     answers = question.answers.order_by(Answer.likes.desc()).paginate(page, QUESTIONS_PER_PAGE, False)
     if question.answers.all() and (page not in answers.iter_pages()):
         # calculating the last page number

@@ -6,6 +6,7 @@ from config import basedir
 from app import app, db
 from app.models import User, Question, Answer, Like
 
+
 class TestCase(unittest.TestCase):
     def setUp(self):
         app.config['TESTING'] = True
@@ -64,7 +65,7 @@ class TestCase(unittest.TestCase):
         assert len(question.answers.all()) == 2
 
     def test_likes(self):
-    	user1 = User(username='sanlem', password='111111')
+        user1 = User(username='sanlem', password='111111')
         user2 = User(username='sanlem1', password='111111')
         db.session.add(user1)
         db.session.add(user2)
@@ -86,7 +87,8 @@ class TestCase(unittest.TestCase):
         db.session.add(like2)
         db.session.commit()
         assert len(Like.query.filter_by(answer_id=answer1.id).all()) == 2
-        assert len(Like.query.filter_by(answer_id=answer1.id).all()) != len(Like.query.filter_by(answer_id=answer2.id).all())
+        assert len(Like.query.filter_by(answer_id=answer1.id).all()) != len(
+            Like.query.filter_by(answer_id=answer2.id).all())
 
 
 if __name__ == '__main__':

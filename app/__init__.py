@@ -6,6 +6,7 @@ from flask.ext.bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.config.from_object('config')
+app.debug = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
