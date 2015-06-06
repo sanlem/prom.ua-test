@@ -25,7 +25,7 @@
 			
           	<ul class="nav navbar-nav navbar-right">
           		{% if g.user.is_authenticated() %}
-          		<p class="navbar-text">Вітаємо, {{ current_user.username }}</p>
+          		<p class="navbar-text">Вітаємо, <a href=" {{ url_for('profile', username=g.user.username)}} ">{{ g.user.username }}</a></p>
 				<li><a href= {{ url_for('logout')}} >Вийти</a></li>
           		{% else %}
             	<li><a href= {{ url_for('register')}} >Зареєструватися</a></li>
