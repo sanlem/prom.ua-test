@@ -1,0 +1,8 @@
+*.pyc
+*.pyo
+bin
+lib
+local
+tmp
+include
+

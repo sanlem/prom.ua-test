@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% from "_registerhelper.html" import render_field %}
+
+{% block content %}
+
+<hr>
+
+	<div class="row">
+		<h4>{{ question.title }}</h4>
+		{% if question.body %}
+			<p class="text">{{ question.body }}</p>
+		{% endif %}
+	</div>	
+
+	<div class="row">	
+		<div class="col-xs-4">
+			<p class="test"> Автор: {{ question.author.username }} </p>
+			<a href= "{{ url_for('some_question', id=question.id) }}" >Детальніше</a>
+		</div>
+		<div class="col-xs-6"></div>
+		<div class="col-xs-2">
+			<p class="text"> {{ question.timestamp }} </p>
+		</div>
+	</div>
+	<hr>
+
+	<div class="row">
+		    <form class="form-default" action= {{ url_for('answer', id=question.id)}}  method="post">
+      			{{ form.hidden_tag }}
+        		<h2 class="form-default-heading">Відповідь</h2>
+        		<dl>
+        			{{ render_field(form.text) }}
+        		</dl>
+        		<hr>
+        		<div class="col-xs-4">
+        		<button class="btn btn-small btn-primary btn-block" type="submit">Відповісти</button>
+      			</div>
+      		</form>
+	</div>
+
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-xs-6">
+		<h3> {{ user.username }} </h3>
+		<p class="text">Питань: <a href="{{ url_for('users_questions', username=user.username) }}">{{ questions_amount }}</a></p>
+		<p class="text">Відповідей: <a href="{{ url_for('users_answers', username=user.username) }}">{{ answers_amount }}</a></p>
+	</div>
+</div>
+
+{% endblock %}

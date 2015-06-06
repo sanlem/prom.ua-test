@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if questions %}
+
+	<div class="row">
+		<h2>Питання користувача <a href=" {{ url_for('profile', username=user.username)}} "> {{ user.username }}</a></h2>
+	</div>
+
+	<hr>
+
+	{% for question in questions.items %}
+
+		<div class="row">
+			<h4>{{ question.title }}</h4>
+				<!--{% if question.body %}
+					<p class="text">{{ question.body }}</p>
+				{% endif %}-->
+			</div>	
+			
+			<div class="row">	
+			<div class="col-xs-4">
+				<p class="test"> Автор: <a href=" {{ url_for('profile', username=question.author.username)}} "> {{ question.author.username }} </a></p>
+				<a href= "{{ url_for('some_question', id=question.id, page=1) }}" >Детальніше</a>
+			</div>
+			<div class="col-xs-6"></div>
+			<div class="col-xs-2">
+				<p class="text"> {{ question.timestamp }} </p>
+			</div>
+		</div>
+		<hr>
+
+	{% endfor %}
+
+
+	<nav>
+  	<ul class="pager">
+  	{% if questions.has_prev %}
+  		<li class="previous"><a href="{{ url_for('users_questions', username=user.username, page = questions.prev_num) }}"><span aria-hidden="true">&larr;</span>Назад</a></li>
+  	{% else %}
+    	<li class="previous disabled"><a href=""><span aria-hidden="true">&larr;</span>Назад</a></li>
+    {% endif %}
+    {% if questions.has_next %}
+    	<li class="next"><a href="{{ url_for('users_questions', username=user.username, page = questions.next_num) }}">Далі<span aria-hidden="true">&rarr;</span></a></li>
+    {% else %}
+    	<li class="next disabled"><a href="">Далі <span aria-hidden="true">&rarr;</span></a></li>
+    {% endif %}
+  </ul>
+</nav>
+
+
+{% else %}
+
+<p class="text">Немає запитань</p>
+
+{% endif %}
+
+{% endblock %}

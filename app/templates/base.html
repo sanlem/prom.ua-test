@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ask & Answer</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/main.css"> 
+  <link rel="shortcut icon" href="/static/icon.ico" type="image/x-icon">
+	{% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<div class="container-narrow">
+	
+	<nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+         	<a class="navbar-brand" href= {{ url_for('index')}} >Ask & Answer</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+        	<ul class="nav navbar-nav">
+            	<li><a href= {{ url_for('questions') }} >Питання</a></li>
+          	</ul>
+			
+          	<ul class="nav navbar-nav navbar-right">
+          		{% if g.user.is_authenticated() %}
+          		<p class="navbar-text">Вітаємо, {{ current_user.username }}</p>
+				<li><a href= {{ url_for('logout')}} >Вийти</a></li>
+          		{% else %}
+            	<li><a href= {{ url_for('register')}} >Зареєструватися</a></li>
+            	<li><a href= {{ url_for('login')}} >Увійти</a></li>
+            	{% endif %}
+          	</ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+	<hr>
+
+	{% with messages = get_flashed_messages() %}
+  	{% if messages %}
+    		{% for message in messages %}
+      			<div class="alert alert-info" role="alert"> {{ message }}</div>
+    		{% endfor %}
+  	{% endif %}
+	{% endwith %}
+
+	{% block content %}
+	{% endblock %}
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	
+</div>  
+	
+</body>
+</html>

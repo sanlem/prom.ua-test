@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+	<h2>Питання № {{ question.id }} </h2>
+</div>
+
+<hr>
+
+<div class="row">
+	<h4>{{ question.title }}</h4>
+	{% if question.body %}
+		<p class="text">{{ question.body }}</p>
+	{% endif %}
+</div>		
+
+<div class="row">	
+	<div class="col-xs-4">
+		<p class="text">Автор: <a href=" {{ url_for('profile', username=question.author.username)}} "> {{ question.author.username }}</a> </p>
+	</div>
+	<div class="col-xs-6"></div>
+	<div class="col-xs-2">
+		<p class="text"> {{ question.timestamp }} </p>
+	</div>
+</div>
+
+<hr>
+
+{% if answers %}
+
+	<div class="row">
+		<h2>Відповіді:</h2>
+	</div>
+
+	<hr>
+
+	{% for answer in answers.items %}
+
+	<div class="row">
+		<div class="col-xs-12">
+			<p class="text"> {{ answer.text }} </p>
+		</div>
+	</div>
+	<div class="row">	
+		<div class="col-xs-4">
+			<p class="test">Автор: <a href=" {{ url_for('profile', username=answer.author.username)}} "> {{ answer.author.username }} </a></p>
+		</div>
+		<div class="col-xs-6"></div>
+		<div class="col-xs-2">
+			<p class="text"> {{ answer.timestamp }} </p>
+			<a class="btn btn-primary" type="button"
+  				href={{ url_for('vote', id=question.id, ans_id=answer.id) }}>  Проголосувати <span class="badge"> {{ answer.likes }} </span>
+			</a>
+		</div>
+	</div>
+	
+	<hr>
+	{% endfor %}
+
+
+	<nav>
+  	<ul class="pager">
+  	{% if answers.has_prev %}
+  		<li class="previous"><a href="{{ url_for('some_question', id=question.id, page = answers.prev_num) }}"><span aria-hidden="true">&larr;</span>Назад</a></li>
+  	{% else %}
+    	<li class="previous disabled"><a href=""><span aria-hidden="true">&larr;</span>Назад</a></li>
+    {% endif %}
+    {% if answers.has_next %}
+    	<li class="next"><a href="{{ url_for('some_question', id=question.id, page = answers.next_num) }}">Далі<span aria-hidden="true">&rarr;</span></a></li>
+    {% else %}
+    	<li class="next disabled"><a href="">Далі <span aria-hidden="true">&rarr;</span></a></li>
+    {% endif %}
+  </ul>
+</nav>
+
+
+{% else %}
+
+<p class="text">Ще ніхто не відповів на це питання.</p>
+
+{% endif %}
+
+<a class="btn btn-small btn-primary" href= {{ url_for('answer', id=question.id)}} >Відповісти</a>
+
+{% endblock %}

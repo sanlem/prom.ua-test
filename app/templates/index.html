@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<hr>
+	
+	<div class="jumbotron">
+		<h1>Ask & Answer</h1>
+		<p class="lead">Задавайте питання та отримуйте відповіді.</p>
+		<a class="btn btn-large btn-success" href= {{ url_for('ask') }} >Задати питання</a>
+	</div>
+	
+	<hr>
+
+
+	{% if questions %}
+		<div class="row-fluid marketing">
+		{% for question in questions %}
+			<div class="row">
+				<h4>{{ question.title }}</h4>
+				<!--{% if question.body %}
+					<p class="text">{{ question.body }}</p>
+				{% endif %}-->
+			</div>	
+			
+			<div class="row">	
+			<div class="col-xs-4">
+				<p class="test"> Автор: <a href=" {{ url_for('profile', username=question.author.username)}} "> {{ question.author.username }} </a></p>
+				<a href= "{{ url_for('some_question', id=question.id, page=1) }}" >Детальніше</a>
+			</div>
+			<div class="col-xs-6"></div>
+			<div class="col-xs-2">
+				<p class="text"> {{ question.timestamp }} </p>
+			</div>
+		</div>
+		<hr>
+
+		{% endfor %}
+
+		<a class="btn btn-small btn-primary" href= {{ url_for('questions')}} >Більше питань</a>		
+
+		</div>
+
+	{% endif %}
+
+{% endblock %}

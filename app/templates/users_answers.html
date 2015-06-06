@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if answers %}
+
+	<div class="row">
+		<h2>Відповіді користувача <a href=" {{ url_for('profile', username=user.username)}} "> {{ user.username }}</a></h2>
+	</div>
+
+	<hr>
+
+	{% for answer in answers.items %}
+
+	<div class="row">
+		<div class="col-xs-12">
+			<h3 class="text">Відповідь на питання <a href= "{{ url_for('some_question', id=answer.question.id, page=1) }}" >№ {{ answer.question_id }} </a></h3>
+			<p class="text"> {{ answer.text }} </p>
+		</div>
+	</div>
+	<div class="row">	
+		<div class="col-xs-4">
+			<p class="text">Автор: <a href=" {{ url_for('profile', username=answer.author.username)}} "> {{ answer.author.username }} </a></p>
+		</div>
+		<div class="col-xs-6"></div>
+		<div class="col-xs-2">
+			<p class="text"> {{ answer.timestamp }} </p>
+			<a class="btn btn-primary" type="button"
+  				href=''> Голосів <span class="badge"> {{ answer.likes }} </span>
+			</a>
+		</div>
+	</div>
+	
+	<hr>
+	{% endfor %}
+
+
+	<nav>
+  	<ul class="pager">
+  	{% if answers.has_prev %}
+  		<li class="previous"><a href="{{ url_for('users_answers', username=user.username, page = answers.prev_num) }}"><span aria-hidden="true">&larr;</span>Назад</a></li>
+  	{% else %}
+    	<li class="previous disabled"><a href=""><span aria-hidden="true">&larr;</span>Назад</a></li>
+    {% endif %}
+    {% if answers.has_next %}
+    	<li class="next"><a href="{{ url_for('users_answers', username=user.username, page = answers.next_num) }}">Далі<span aria-hidden="true">&rarr;</span></a></li>
+    {% else %}
+    	<li class="next disabled"><a href="">Далі <span aria-hidden="true">&rarr;</span></a></li>
+    {% endif %}
+  </ul>
+</nav>
+
+
+{% else %}
+
+<p class="text">Ще ніхто не відповів на це питання.</p>
+
+{% endif %}
+
+{% endblock %}

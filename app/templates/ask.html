@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% from "_registerhelper.html" import render_field %}
+
+{% block content %}
+
+<div class="row">
+
+<div class="col-xs-4"></div>
+
+<div class="col-xs-4">
+
+      <form class="form-default" action= {{ url_for('ask')}}  method="post">
+      {{ form.hidden_tag }}
+        <h3 class="form-default-heading">Задати питання</h3>
+        <dl>
+        	{{ render_field(form.title) }}
+        	{{ render_field(form.body) }}
+        </dl>
+
+        <hr>
+        <button class="btn btn-small btn-primary btn-block" type="submit">Запитати</button>
+      </form>
+
+</div>
+
+<div class="col-xs-4"></div>
+
+</div> <!-- row --> 
+
+{% endblock %}
