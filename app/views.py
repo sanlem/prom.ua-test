@@ -167,7 +167,7 @@ def profile(username):
 @app.route('/profile/<username>/answers/<int:page>')
 def users_answers(username, page=1):
     user = User.query.filter_by(username=username).first_or_404()
-    answers = user.answers.paginate(page, QUESTIONS_PER_PAGE, False)
+    answers = user.answers.order_by(Answer.id.desc()).paginate(page, QUESTIONS_PER_PAGE, False)
     if user.answers.all() and (page not in answers.iter_pages()):
         # calculating the last page number
         num = len(user.answers.all())
@@ -181,7 +181,7 @@ def users_answers(username, page=1):
 @app.route('/profile/<username>/questions/<int:page>')
 def users_questions(username, page=1):
     user = User.query.filter_by(username=username).first_or_404()
-    questions = user.questions.paginate(page, QUESTIONS_PER_PAGE, False)
+    questions = user.questions.order_by(Question.id.desc()).paginate(page, QUESTIONS_PER_PAGE, False)
     if user.questions.all() and (page not in questions.iter_pages()):
         # calculating the last page number
         num = len(user.questions.all())
